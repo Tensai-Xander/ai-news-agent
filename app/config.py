@@ -7,15 +7,13 @@ RSS_FEEDS = [
     # Architecture / system design
     {"name": "MartinFowler", "url": "https://martinfowler.com/feed.atom"},
     {"name": "ByteByteGo", "url": "https://blog.bytebytego.com/feed"},
-    {"name": "AWS", "url": "https://aws.amazon.com/blogs/architecture/feed/"},
 
     # General tech
     {"name": "HackerNews", "url": "https://hnrss.org/frontpage"},
 
-    # Programming (IMPORTANT)
-    {"name": "DevTo", "url": "https://dev.to/feed"},
-    {"name": "FreeCodeCamp", "url": "https://www.freecodecamp.org/news/rss/"},
-    {"name": "Hashnode", "url": "https://hashnode.com/feed"},
+    # Programming
+    {"name": "Baeldung", "url": "https://www.baeldung.com/feed"},
+    {"name": "FrontendMasters", "url": "https://frontendmasters.com/blog/feed/"},
 ]
 
 AZURE_OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY")

@@ -30,29 +30,28 @@ User profile:
 - Interests: {", ".join(USER_PROFILE["interests"])}
 - Exclude: {", ".join(USER_PROFILE["exclude"])}
 - Level: {USER_PROFILE["level"]}
-- Goal: {USER_PROFILE["goal"]}
 
 From the following articles:
 {formatted_articles}
 
 Select the {OUTPUT_ARTICLES_COUNT} articles with this distribution:
-- Around 1/3 about AI (LLMs, agents, AI tools, applied AI, developer usage of AI)
+- Around 1/3 about AI (LLMs, agents, AI tools)
 - Around 1/3 about software architecture
 - Around 1/3 article about programming (frontend or backend, coding practices, frameworks, tutorials)
 
 STRICT RULES:
-- Prioritize technical depth and practical value
 - Avoid duplicates or very similar topics
-- Avoid low-value content (startup funding, marketing, hype)
+- Avoid low-value content (startup funding, marketing)
+- Prioritize technical depth and relevance to the user profile
+- Only select articles written in English
 
 Return JSON array with:
-- category (AI, ARCHITECTURE, PROGRAMMING)
 - title
 - summary (2 lines max)
 - why_it_matters (1 line)
+- level (beginner / intermediate / advanced)
+- interest (one of the user profile interests that is DIRECTLY and EXPLICITLY related to the article content)
 - url
-
-Return ONLY valid JSON.
 """
 
     try:

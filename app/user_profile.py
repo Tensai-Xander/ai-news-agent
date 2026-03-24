@@ -3,10 +3,10 @@ USER_PROFILE = {
         "AI agents",
         "AI tools",
         "LLMs",
-        "software architecture",
-        "system design",
+        "Software architecture",
+        "System design",
         "Java",
-        "react",
+        "Frontend",
         "AWS",
     ],
     "exclude": [
@@ -15,6 +15,5 @@ USER_PROFILE = {
         "beginner tutorials",
         "marketing content"
     ],
-    "level": "intermediate to advanced",
-    "goal": "Stay up to date with advanced AI and software engineering topics"
+    "level": "intermediate to advanced"
 }
