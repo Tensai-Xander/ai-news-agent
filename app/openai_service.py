@@ -9,6 +9,7 @@ from app.config import (
     AZURE_OPENAI_DEPLOYMENT,
     OUTPUT_ARTICLES_COUNT,
 )
+from app.user_profile import USER_PROFILE
 
 client = AzureOpenAI(
     api_key=AZURE_OPENAI_API_KEY,
@@ -23,7 +24,13 @@ def select_top_articles(articles: List[Article]) -> List[dict]:
     ]
 
     prompt = f"""
-You are a senior software engineer and AI specialist curating high-quality tech news.
+You are an expert tech curator.
+
+User profile:
+- Interests: {", ".join(USER_PROFILE["interests"])}
+- Exclude: {", ".join(USER_PROFILE["exclude"])}
+- Level: {USER_PROFILE["level"]}
+- Goal: {USER_PROFILE["goal"]}
 
 From the following articles:
 {formatted_articles}
