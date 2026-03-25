@@ -1,5 +1,6 @@
 import requests
 from typing import List
+import json
 
 def send_to_slack(webhook_url: str, articles: List[dict]):
     message_title = "*🚀 Daily AI & Tech News*\n\n"
