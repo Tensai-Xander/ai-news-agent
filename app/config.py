@@ -5,15 +5,15 @@ load_dotenv()
 
 RSS_FEEDS = [
     # Architecture / system design
-    {"name": "MartinFowler", "url": "https://martinfowler.com/feed.atom"},
-    {"name": "ByteByteGo", "url": "https://blog.bytebytego.com/feed"},
+    {"name": "MartinFowler", "link": "https://martinfowler.com/feed.atom"},
+    {"name": "ByteByteGo", "link": "https://blog.bytebytego.com/feed"},
 
     # General tech
-    {"name": "HackerNews", "url": "https://hnrss.org/frontpage"},
+    {"name": "HackerNews", "link": "https://hnrss.org/frontpage"},
 
     # Programming
-    {"name": "Baeldung", "url": "https://www.baeldung.com/feed"},
-    {"name": "FrontendMasters", "url": "https://frontendmasters.com/blog/feed/"},
+    {"name": "Baeldung", "link": "https://www.baeldung.com/feed"},
+    {"name": "FrontendMasters", "link": "https://frontendmasters.com/blog/feed/"},
 ]
 
 AZURE_OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY")

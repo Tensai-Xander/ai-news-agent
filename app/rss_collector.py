@@ -7,14 +7,13 @@ def fetch_articles() -> List[Article]:
     articles = []
 
     for feed in RSS_FEEDS:
-        parsed = feedparser.parse(feed["url"])
+        parsed = feedparser.parse(feed["link"])
 
         for entry in parsed.entries[:MAX_ARTICLES_PER_FEED]:
             articles.append(
                 Article(
                     title=entry.title,
                     link=entry.link,
-                    source=feed["name"]
                 )
             )
 

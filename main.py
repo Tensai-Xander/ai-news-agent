@@ -7,11 +7,9 @@ from app.config import SLACK_WEBHOOK_URL
 def main():
     articles = fetch_articles()
     new_articles = filter_new_articles(articles)
+    top_articles = select_top_articles(new_articles)
 
-    if not new_articles:
-        top_articles = "No new articles today."
-    else:
-        top_articles = select_top_articles(new_articles)
+    print(top_articles)
 
     send_to_slack(SLACK_WEBHOOK_URL, top_articles)
 

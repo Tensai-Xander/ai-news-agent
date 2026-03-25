@@ -2,7 +2,7 @@ USER_PROFILE = {
     "interests": [
         "AI agents",
         "AI tools",
-        "LLMs",
+        "LLM",
         "Software architecture",
         "System design",
         "Java",
