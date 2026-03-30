@@ -11,7 +11,7 @@ def get_user_preferences():
     DAY_IN_SEC = 86400
 
     # score par interest
-    cur.execute("""
+    cur.execute(f"""
         SELECT interest,
             SUM(
                 CASE 
@@ -26,7 +26,7 @@ def get_user_preferences():
     interest_scores = {row[0]: row[1] for row in cur.fetchall()}
 
     # score features
-    cur.execute("""
+    cur.execute(f"""
     SELECT
         SUM(
             (CASE WHEN has_code AND action='like' THEN 1 ELSE 0 END -
