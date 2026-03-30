@@ -22,14 +22,14 @@ def save_seen(seen):
     with open(DATA_FILE, "w") as f:
         json.dump(list(seen), f)
 
-def filter_new_articles(articles: List[Article]) -> List[Article]:
+def get_new_articles(articles: List[Article]) -> List[Article]:
     seen = load_seen()
-    new_articles = []
+    return [a for a in articles if a.link not in seen]
+
+def mark_as_seen(articles: List[Article]):
+    seen = load_seen()
 
     for article in articles:
-        if article.link not in seen:
-            new_articles.append(article)
-            seen.add(article.link)
+        seen.add(article.link)
 
     save_seen(seen)
-    return new_articles

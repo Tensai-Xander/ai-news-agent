@@ -12,7 +12,6 @@ class Article:
     link: str
     summary: str = ""
     why_it_matters: str = ""
-    level: str = ""
     interest: str = ""
     features: Features = None
 

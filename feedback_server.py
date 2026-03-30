@@ -16,10 +16,10 @@ def save_feedback(title: str, action: str):
 
     cur.execute(
         """
-        INSERT INTO feedback (title, action)
-        VALUES (%s, %s)
+        INSERT INTO feedback (title, action, interest, has_code, is_deep_dive, is_tutorial)
+        VALUES (%s, %s, %s, %s, %s, %s)
         """,
-        (title, action)
+        (title, action, interest, has_code, is_deep_dive, is_tutorial)
     )
 
     conn.commit()
@@ -37,12 +37,29 @@ async def slack_feedback(request: Request):
     action_data = payload["actions"][0]
     value = json.loads(action_data["value"])
 
-    action = value["action"]
     title = value["title"]
+    action = value["action"]
+    interest = value["interest"]
 
-    print("ACTION:", action)
+    features = value["features"]
+    has_code = features["has_code"]
+    is_deep_dive = features["is_deep_dive"]
+    is_tutorial = features["is_tutorial"]
+
     print("TITLE:", title)
+    print("ACTION:", action)
+    print("INTEREST:", interest)
+    print("HAS_CODE:", has_code)
+    print("IS_DEEP_DIVE:", is_deep_dive)
+    print("IS_TUTORIAL:", is_tutorial)
 
-    save_feedback(title, action)
+    save_feedback(
+        title,
+        action,
+        interest,
+        has_code,
+        is_deep_dive,
+        is_tutorial
+    )
 
     return {"status": "ok"}

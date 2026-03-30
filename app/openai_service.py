@@ -31,7 +31,6 @@ def parse_article(data: dict) -> Article:
         link=data.get("link", ""),
         summary=data.get("summary", ""),
         why_it_matters=data.get("why_it_matters", ""),
-        level=data.get("level", ""),
         interest=data.get("interest", ""),
         features=features,
     )
@@ -43,6 +42,7 @@ def select_top_articles(articles: List[Article]) -> List[dict]:
         formatted_articles.append({
             "title": a.title,
             "link": a.link,
+            "summary": a.summary
         })
 
     prompt = f"""
@@ -51,10 +51,9 @@ You are a senior software engineer and selecting high-quality technical articles
 Your profile:
 - Interests: {", ".join(USER_PROFILE["interests"])}
 - Exclude: {", ".join(USER_PROFILE["exclude"])}
-- Level: {USER_PROFILE["level"]}
 
 From the following articles:
-{formatted_articles}
+{json.dumps(formatted_articles, indent=2)}
 
 Select the {OUTPUT_ARTICLES_COUNT} articles with this distribution:
 - Around 1/3 about AI (LLMs, agents, AI tools)
@@ -68,11 +67,11 @@ STRICT RULES:
 - Even if the title does not explicitly match keywords, detect implicit relevance
 - Only select articles written in English
 
-Return JSON array with:
+Return a JSON OBJECT with a single key "articles" containing an array of objects.
+Each object in the array must have:
 - title
-- summary (2 lines max)
+- summary (The provided summary is raw input. You must rewrite it into a concise 2-line summary)
 - why_it_matters (1 line, be specific to your profile)
-- level (beginner / intermediate / advanced)
 - interest (one of the user profile interests that is DIRECTLY and EXPLICITLY related to the article content)
 - features:
   - has_code
@@ -91,17 +90,26 @@ Rules for features:
         response = client.chat.completions.create(
             model=AZURE_OPENAI_DEPLOYMENT,
             messages=[{"role": "user", "content": prompt}],
+            response_format={"type": "json_object"}
         )
 
-        content = response.choices[0].message.content
+        content = response.choices[0].message.content.strip()
 
         # clean ```` if any
-        if content.startswith("```"):
-            content = content.split("```")[1]
+        if content.startswith("```json"):
+            content = content[7:-3]
+        elif content.startswith("```"):
+            content = content[3:-3]
 
         data = json.loads(content)
 
-        return [parse_article(a) for a in data]
+        articles_list = data.get("articles", [])
+
+        return [parse_article(a) for a in articles_list]
+    except json.JSONDecodeError as e:
+        print(f"Error parsing JSON from OpenAI. Raw content was:\n{content}")
+        print("JSON Error:", e)
+        return []
     except Exception as e:
         print("Error with OpenAI:", e)
         return []

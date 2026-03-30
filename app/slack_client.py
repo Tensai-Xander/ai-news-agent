@@ -7,7 +7,7 @@ def send_to_slack(webhook_url: str, articles: List[dict]):
 
     if not articles:
         message_body = "📭 No new articles today."
-        json_message = {"text": message + message_body}
+        json_message = {"text": message_title + message_body}
     else:
         blocks = [
             {
@@ -27,7 +27,6 @@ def send_to_slack(webhook_url: str, articles: List[dict]):
                 f"*{article.title}*\n"
                 f"{article.summary}\n"
                 f"💡 *Why it matters:* {article.why_it_matters}\n"
-                f"📊 *Level:* {article.level}\n"
                 f"🤖 *Interest:* {article.interest}\n"
                 f"🔗 <{article.link}>\n\n-----\n\n"
             )
@@ -48,7 +47,13 @@ def send_to_slack(webhook_url: str, articles: List[dict]):
                             "text": {"type": "plain_text", "text": "👍"},
                             "value": json.dumps({
                                 "action": "like",
-                                "title": article.title
+                                "title": article.title,
+                                "interest": article.interest,
+                                "features": {
+                                    "has_code": article.features.has_code,
+                                    "is_deep_dive": article.features.is_deep_dive,
+                                    "is_tutorial": article.features.is_tutorial
+                                }
                             })
                         },
                         {
@@ -56,7 +61,13 @@ def send_to_slack(webhook_url: str, articles: List[dict]):
                             "text": {"type": "plain_text", "text": "👎"},
                             "value": json.dumps({
                                 "action": "dislike",
-                                "title": article.title
+                                "title": article.title,
+                                "interest": article.interest,
+                                "features": {
+                                    "has_code": article.features.has_code,
+                                    "is_deep_dive": article.features.is_deep_dive,
+                                    "is_tutorial": article.features.is_tutorial
+                                }
                             })
                         }
                     ]
@@ -64,5 +75,6 @@ def send_to_slack(webhook_url: str, articles: List[dict]):
                 {"type": "divider"}
             ])
 
-    json_message = {"blocks": blocks}
+        json_message = {"blocks": blocks}
+
     requests.post(webhook_url, json=json_message)

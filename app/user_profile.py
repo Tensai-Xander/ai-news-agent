@@ -12,8 +12,6 @@ USER_PROFILE = {
     "exclude": [
         "low-code",
         "no-code",
-        "beginner tutorials",
         "marketing content"
     ],
-    "level": "intermediate to advanced"
 }
