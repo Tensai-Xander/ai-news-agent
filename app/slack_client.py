@@ -2,6 +2,18 @@ import requests
 from typing import List
 import json
 
+def build_feedback_payload(article, action: str) -> str:
+    return json.dumps({
+        "action": action,
+        "title": article.title,
+        "interest": article.interest,
+        "features": {
+            "has_code": article.features.has_code,
+            "is_deep_dive": article.features.is_deep_dive,
+            "is_tutorial": article.features.is_tutorial
+        }
+    })
+
 def send_to_slack(webhook_url: str, articles: List[dict]):
     message_title = "*🚀 Daily AI & Tech News*\n\n"
 
@@ -45,30 +57,12 @@ def send_to_slack(webhook_url: str, articles: List[dict]):
                         {
                             "type": "button",
                             "text": {"type": "plain_text", "text": "👍"},
-                            "value": json.dumps({
-                                "action": "like",
-                                "title": article.title,
-                                "interest": article.interest,
-                                "features": {
-                                    "has_code": article.features.has_code,
-                                    "is_deep_dive": article.features.is_deep_dive,
-                                    "is_tutorial": article.features.is_tutorial
-                                }
-                            })
+                            "value": build_feedback_payload(article, "like")
                         },
                         {
                             "type": "button",
                             "text": {"type": "plain_text", "text": "👎"},
-                            "value": json.dumps({
-                                "action": "dislike",
-                                "title": article.title,
-                                "interest": article.interest,
-                                "features": {
-                                    "has_code": article.features.has_code,
-                                    "is_deep_dive": article.features.is_deep_dive,
-                                    "is_tutorial": article.features.is_tutorial
-                                }
-                            })
+                            "value": build_feedback_payload(article, "dislike")
                         }
                     ]
                 },
