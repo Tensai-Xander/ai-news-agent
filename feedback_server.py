@@ -10,7 +10,7 @@ app = FastAPI()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-def save_feedback(title: str, action: str):
+def save_feedback(title:str, action:str, interest:str, has_code:bool, is_deep_dive:bool, is_tutorial:bool):
     conn = psycopg2.connect(DATABASE_URL)
     cur = conn.cursor()
 
