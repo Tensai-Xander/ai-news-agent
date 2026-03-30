@@ -10,12 +10,15 @@ from app.config import (
     OUTPUT_ARTICLES_COUNT,
 )
 from app.user_profile import USER_PROFILE
+from app.user_learning import get_user_preferences
 
 client = AzureOpenAI(
     api_key=AZURE_OPENAI_API_KEY,
     api_version=AZURE_OPENAI_API_VERSION,
     azure_endpoint=AZURE_OPENAI_ENDPOINT,
 )
+
+user_prefs = get_user_preferences()
 
 def parse_article(data: dict) -> Article:
     features_data = data.get("features", {})
@@ -59,6 +62,15 @@ Select the {OUTPUT_ARTICLES_COUNT} articles with this distribution:
 - Around 1/3 about AI (LLMs, agents, AI tools)
 - Around 1/3 about software architecture
 - Around 1/3 about programming (frontend or backend, coding practices, frameworks, tutorials)
+
+User feedback insights (learned from past behavior):
+- Interest scores: {user_prefs["interest_scores"]}
+- Feature preferences: {user_prefs["feature_scores"]}
+
+Guidelines:
+- Strongly prioritize topics with high positive scores
+- Avoid topics with negative scores
+- Prefer articles with features that have positive scores (e.g., deep dive, code)
 
 STRICT RULES:
 - Avoid duplicates or very similar topics
