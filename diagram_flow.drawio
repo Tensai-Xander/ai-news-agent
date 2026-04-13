@@ -1,0 +1,70 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36" version="29.2.6">
+  <diagram id="t4xpgi9Rezx0elY-xMUK" name="AI News Agent Architecture">
+    <mxGraphModel dx="940" dy="577" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="RSS Feed" vertex="1">
+          <mxGeometry height="50" width="140" x="100" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="記事収集&#xa;(Collector)" vertex="1">
+          <mxGeometry height="60" width="140" x="100" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="重複排除&#xa;(Deduplicator)" vertex="1">
+          <mxGeometry height="60" width="140" x="100" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;" value="OpenAI&#xa;記事選定・要約" vertex="1">
+          <mxGeometry height="60" width="160" x="90" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;" value="ユーザースコア反映&#xa;(feedback + decay)" vertex="1">
+          <mxGeometry height="60" width="180" x="80" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;" value="Slack投稿&#xa;(Webhook)" vertex="1">
+          <mxGeometry height="60" width="160" x="90" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="👍 👎 フィードバック" vertex="1">
+          <mxGeometry height="60" width="160" x="360" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;" value="FastAPI&#xa;/slack/feedback" vertex="1">
+          <mxGeometry height="60" width="160" x="360" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;" value="PostgreSQL" vertex="1">
+          <mxGeometry height="60" width="140" x="370" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;" value="ユーザー嗜好学習&#xa;(スコア更新)" vertex="1">
+          <mxGeometry height="60" width="180" x="350" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-11" edge="1" parent="1" source="IJ7j1FMAww7UNwktvfXu-1" target="IJ7j1FMAww7UNwktvfXu-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-12" edge="1" parent="1" source="IJ7j1FMAww7UNwktvfXu-2" target="IJ7j1FMAww7UNwktvfXu-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-13" edge="1" parent="1" source="IJ7j1FMAww7UNwktvfXu-3" target="IJ7j1FMAww7UNwktvfXu-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-14" edge="1" parent="1" source="IJ7j1FMAww7UNwktvfXu-4" target="IJ7j1FMAww7UNwktvfXu-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-15" edge="1" parent="1" source="IJ7j1FMAww7UNwktvfXu-5" target="IJ7j1FMAww7UNwktvfXu-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-16" edge="1" parent="1" source="IJ7j1FMAww7UNwktvfXu-6" target="IJ7j1FMAww7UNwktvfXu-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-17" edge="1" parent="1" source="IJ7j1FMAww7UNwktvfXu-7" target="IJ7j1FMAww7UNwktvfXu-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-18" edge="1" parent="1" source="IJ7j1FMAww7UNwktvfXu-8" target="IJ7j1FMAww7UNwktvfXu-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-19" edge="1" parent="1" source="IJ7j1FMAww7UNwktvfXu-9" target="IJ7j1FMAww7UNwktvfXu-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IJ7j1FMAww7UNwktvfXu-20" edge="1" parent="1" source="IJ7j1FMAww7UNwktvfXu-10" target="IJ7j1FMAww7UNwktvfXu-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
