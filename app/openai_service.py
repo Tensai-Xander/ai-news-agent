@@ -1,24 +1,23 @@
-from openai import AzureOpenAI
+import boto3
+import os
 import json
 from typing import List
 from app.models import Article, Features
 from app.config import (
-    AZURE_OPENAI_API_KEY,
-    AZURE_OPENAI_API_VERSION,
-    AZURE_OPENAI_ENDPOINT,
-    AZURE_OPENAI_DEPLOYMENT,
+    BEDROCK_API_KEY,
+    BEDROCK_MODEL_ID,
+    BEDROCK_REGION,
     OUTPUT_ARTICLES_COUNT,
 )
 from app.user_profile import USER_PROFILE
 from app.user_learning import get_user_preferences
 
-client = AzureOpenAI(
-    api_key=AZURE_OPENAI_API_KEY,
-    api_version=AZURE_OPENAI_API_VERSION,
-    azure_endpoint=AZURE_OPENAI_ENDPOINT,
-)
+os.environ["AWS_BEARER_TOKEN_BEDROCK"] = BEDROCK_API_KEY
 
-user_prefs = get_user_preferences()
+client = boto3.client(
+    service_name="bedrock-runtime",
+    region_name=BEDROCK_REGION
+)
 
 def parse_article(data: dict) -> Article:
     features_data = data.get("features", {})
@@ -39,6 +38,8 @@ def parse_article(data: dict) -> Article:
     )
 
 def select_top_articles(articles: List[Article]) -> List[dict]:
+    user_prefs = get_user_preferences()
+    
     formatted_articles = []
 
     for a in articles:
@@ -99,13 +100,21 @@ Rules for features:
 """
 
     try:
-        response = client.chat.completions.create(
-            model=AZURE_OPENAI_DEPLOYMENT,
-            messages=[{"role": "user", "content": prompt}],
-            response_format={"type": "json_object"}
+        response = client.converse(
+            modelId=BEDROCK_MODEL_ID,
+            messages=[
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "text": prompt
+                        }
+                    ]
+                }
+            ]
         )
 
-        content = response.choices[0].message.content.strip()
+        content = response["output"]["message"]["content"][0]["text"].strip()
 
         # clean ```` if any
         if content.startswith("```json"):
